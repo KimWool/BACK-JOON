@@ -10,12 +10,14 @@ public class Main {
 
         String string = s.nextLine(); //문자열
 
-        char[] chars = string.toCharArray();
-        int[] numbers = new int[L];
-        int hash = 0;
+        long hash = 0;
+        long pow = 1;
+        final int M = 1234567891;
+        
         for (int i = 0; i < L; i++) {
-            numbers[i] = (int) chars[i] - 96;
-            hash += (numbers[i] * Math.pow(31, i)) % 1234567891;
+            int num = string.charAt(i) - 'a' + 1;
+            hash = (hash + (pow * num) % M) % M;
+            pow = (pow * 31) % M;
         }
 
         System.out.print(hash);
