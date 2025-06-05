@@ -13,22 +13,24 @@ public class Main {
 
         int count = 0;
         int i = 0;
-        int patternLength = 2 * N + 1;
+        int pattern = 0; //연결된 "OI"의 개수
 
-        while (i <= M - patternLength) {
-            boolean isPattern = true;
-            for (int j = 0; j < patternLength; j++) {
-                if ((j % 2 == 0 && S.charAt(i + j) != 'I') || (j % 2 == 1 && S.charAt(i + j) != 'O')) {
-                    isPattern = false;
-                    break;
+        while (i < M - 1) {
+            if (S.charAt(i) == 'I' && S.charAt(i + 1) == 'O') {
+                int j = i + 1;
+                while (j + 1 < M && S.charAt(j) == 'O' && S.charAt(j + 1) == 'I') {
+                    pattern++;
+                    j += 2;
+
+                    if (pattern == N) {
+                        count++;
+                        pattern--; //겹치는 패턴 고려
+                    }
                 }
-            }
-
-            if (isPattern) {
-                count++;
-                i += 2; //겹치는 패턴 고려
+                i = j; //다음 탐색 위치로 이동
+                pattern = 0; //패턴 초기화
             } else {
-                i++; //다음 문자로 이동
+                i++;
             }
         }
 
