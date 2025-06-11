@@ -8,10 +8,10 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String[] input = br.readLine().split(" ");
-        int A = Integer.parseInt(input[0]);
-        int B = Integer.parseInt(input[1]);
+        long A = Long.parseLong(input[0]);
+        long B = Long.parseLong(input[1]);
 
-        int result = (A + B) * (A - B);
+        long result = (A + B) * (A - B);
         System.out.print(result);
     }
 }
