@@ -1,41 +1,37 @@
 #include <stdio.h>
-#include <string.h>
 
-#define MAX 1001
-
-int main() {
+int main(void) {
     int N, M;
-	char A[MAX], B[MAX];
-    int result[MAX * 2] = {0};
-
-    scanf("%d %d", &A, &B);
+    scanf("%d %d", &N, &M);
     
-	scanf("%s", A);
-    scanf("%s", B);
+    char A[50000], B[50000];
+    scanf("%s %s", A, B);
 
-    int lenA = strlen(A);
-    int lenB = strlen(B);
+    int result[100000];
 
-    for (int i = lenA - 1; i >= 0; i--) {
-        for (int j = lenB - 1; j >= 0; j--) {
-            int mul = (A[i] - '0') * (B[j] - '0');
-            int p1 = i + j, p2 = i + j + 1;
-            int sum = mul + result[p2];
-
-            result[p2] = sum % 10;
-            result[p1] += sum / 10;
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < N; j++) {
+            int temp = (A[N - 1 - j] - '0') * (B[M - 1 - i] - '0');
+            result[N + M - 1 - i - j] += temp;  
         }
     }
 
-    int start = 0;
-    while (start < lenA + lenB && result[start] == 0) start++;
+    for (int i = N + M - 1; i > 0; i--) {
+        result[i - 1] += result[i] / 10;
+        result[i] %= 10; 
+    }
 
-    if (start == lenA + lenB) printf("0");
-    else {
-        for (int i = start; i < lenA + lenB; i++) {
+    int flag = 0;
+    for (int i = 0; i < N + M; i++) {
+        if (flag == 0) {
+            if (result[i] != 0)
+                flag = 1;
+            else if (i == N + M - 1)
+                printf("0");
+        }
+        if (flag != 0)
             printf("%d", result[i]);
-        }
     }
-
+    
     return 0;
 }
